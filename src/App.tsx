@@ -5,8 +5,12 @@ import ApplianceQueryList from './pages/ApplianceQueryList';
 const App: React.FC  = () => {
   return (
     <div>
-      {/* <ApplianceList/> */}
+      {/* // rtk asynchThunk slice  */}
+      {/* <ApplianceList/>   */}
 
+
+
+{/* // rtk query slice  */}
       <ApplianceQueryList />
     </div>
   );

@@ -12,8 +12,9 @@ const ApplianceQueryList: React.FC = () => {
     error,
   } = useGetAllAppliancesQuery();
 
+
   // 🔹 Mutation hooks
-  const [createAppliance] = useCreateApplianceMutation();
+  const [createAppliance,{}] = useCreateApplianceMutation();
   const [updateAppliance] = useUpdateApplianceByIdMutation();
     const [deleteAppliance] = useDeleteApplianceByIdMutation();
     

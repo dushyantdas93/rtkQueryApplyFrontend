@@ -14,7 +14,7 @@ export interface Appliance {
 export const metaDataQuery = createApi({
   reducerPath: "metaDataQuery",
   baseQuery: axiosBaseQuery(),
-  tagTypes: ["Appliance"],
+  // tagTypes: ["Appliance"],
 
   endpoints: (builder) => ({
     // 🟢 Get All Appliances
@@ -23,7 +23,7 @@ export const metaDataQuery = createApi({
         url: "/metadata/appliances/all",
         method: "GET",
       }),
-      providesTags: ["Appliance"],
+      // providesTags: ["Appliance"],
     }),
     // 🟢 Create Appliance
     createAppliance: builder.mutation<Appliance, Partial<Appliance>>({
@@ -41,6 +41,7 @@ export const metaDataQuery = createApi({
             "getAllAppliances",
             undefined,
             (draft) => {
+       
               draft.data.push({
                 id: tempId,
                 ...info,
@@ -60,7 +61,7 @@ export const metaDataQuery = createApi({
               undefined,
               (draft) => {
                   const index = draft.data.findIndex((a) => a.id === tempId);
-                  console.log(index);
+                  // console.log(index);
                 if (index !== -1) {
                   draft.data[index].id = data.id; // overwrite with real server response
                 }
