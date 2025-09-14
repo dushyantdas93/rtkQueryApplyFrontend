@@ -31,8 +31,8 @@ export const requirementApi = createApi({
   reducerPath: "requirementApi",
   baseQuery: axiosBaseQuery,
   tagTypes: ["Requirement"],
-  keepUnusedDataFor: 120, // cache 2 min
-  refetchOnFocus: true, // tab focus
+  keepUnusedDataFor: 12, // cache 2 min
+  // refetchOnFocus: true, // tab focus
   refetchOnReconnect: true, // network reconnect
 
   endpoints: (builder) => ({
@@ -123,6 +123,8 @@ export const requirementApi = createApi({
         }
       },
     }),
+
+
 
     // 🟢 Delete Requirement
     deleteRequirement: builder.mutation<

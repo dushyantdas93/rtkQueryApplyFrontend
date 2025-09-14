@@ -15,6 +15,9 @@ export const metaDataQuery = createApi({
   reducerPath: "metaDataQuery",
   baseQuery: axiosBaseQuery(),
   // tagTypes: ["Appliance"],
+  keepUnusedDataFor: 120, // cache 2 min
+  refetchOnFocus: true, // tab focus
+  refetchOnReconnect: true, // network reconnect
 
   endpoints: (builder) => ({
     // 🟢 Get All Appliances
@@ -41,7 +44,8 @@ export const metaDataQuery = createApi({
             "getAllAppliances",
             undefined,
             (draft) => {
-       
+              //............................................draft
+
               draft.data.push({
                 id: tempId,
                 ...info,
@@ -59,17 +63,17 @@ export const metaDataQuery = createApi({
             metaDataQuery.util.updateQueryData(
               "getAllAppliances",
               undefined,
-              (draft) => {
-                  const index = draft.data.findIndex((a) => a.id === tempId);
-                  // console.log(index);
+              ({ data: data1 }) => {
+                const index = data1.findIndex((a) => a.id === tempId);
+                // console.log(index);
                 if (index !== -1) {
-                  draft.data[index].id = data.id; // overwrite with real server response
+                  data1[index].id = data.id; // overwrite with real server response
                 }
               }
             )
           );
 
-        //   console.log("✅ Created Appliance:", data);
+          //   console.log("✅ Created Appliance:", data);
         } catch (err) {
           console.error("❌ Create failed:", err);
           patchResult.undo();
@@ -87,17 +91,17 @@ export const metaDataQuery = createApi({
         method: "PUT",
         data: info,
       }),
-    //   invalidatesTags: ["Appliance"],
+      //   invalidatesTags: ["Appliance"],
       async onQueryStarted({ id, info }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           metaDataQuery.util.updateQueryData(
             "getAllAppliances",
             undefined,
-            (draft) => {
-                const index = draft.data.findIndex((a) => a.id === id);
-            
+            ({ data }) => {
+              const index = data.findIndex((a) => a.id === id);
+
               if (index !== -1) {
-                draft.data[index] = { ...draft.data[index], ...info } as Appliance;
+                data[index] = { ...data[index], ...info } as Appliance;
               }
             }
           )
@@ -116,14 +120,14 @@ export const metaDataQuery = createApi({
         url: `/metadata/appliances/delete/${id}`,
         method: "DELETE",
       }),
-    //   invalidatesTags: ["Appliance"],
+      //   invalidatesTags: ["Appliance"],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         console.log(id);
         const patchResult = dispatch(
           metaDataQuery.util.updateQueryData(
             "getAllAppliances",
             undefined,
-            ({data}) => {
+            ({ data }) => {
               const index = data.findIndex((a) => a.id === id);
               if (index !== -1) data.splice(index, 1);
             }

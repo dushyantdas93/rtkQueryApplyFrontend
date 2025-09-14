@@ -1,5 +1,5 @@
 // ApplianceQueryList.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import { useCreateApplianceMutation, useDeleteApplianceByIdMutation, useGetAllAppliancesQuery, useUpdateApplianceByIdMutation } from "../rtk/rtkQuerySlices/metaDataQuerySlice";
 
 
@@ -14,11 +14,12 @@ const ApplianceQueryList: React.FC = () => {
 
 
   // 🔹 Mutation hooks
-  const [createAppliance,{}] = useCreateApplianceMutation();
+  const [createAppliance] = useCreateApplianceMutation();
   const [updateAppliance] = useUpdateApplianceByIdMutation();
     const [deleteAppliance] = useDeleteApplianceByIdMutation();
     
-  
+    
+
 
   return (
     <div>
@@ -32,7 +33,7 @@ const ApplianceQueryList: React.FC = () => {
       )}
 
       <ul>
-        {appliances?.data?.map((a) => (
+        {/* {appliances?.data?.map((a) => (
           <li key={a.id}>
             {a.name} 
             <button onClick={() => deleteAppliance(a.id)}>Delete</button>
@@ -47,7 +48,7 @@ const ApplianceQueryList: React.FC = () => {
               Update
             </button>
           </li>
-        ))}
+        ))} */}
       </ul>
 
       <button onClick={() => createAppliance({ name: "Fridge " + Date.now() })}>
