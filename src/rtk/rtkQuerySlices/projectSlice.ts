@@ -32,7 +32,7 @@ export const projectApi = createApi({
 
     createProject: builder.mutation<Project, Partial<Project>>({
       query: (project) => ({
-        url: "/projects",
+        url: "/public/project-details/createProperty",
         method: "POST",
         body: project,
       }),

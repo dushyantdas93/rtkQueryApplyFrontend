@@ -7,6 +7,7 @@ import {
 } from "../rtk/rtkQuerySlices/projectSlice";
 
 import type { Project } from "../rtk/rtkQuerySlices/projectSlice";
+import { CloudLightning } from "lucide-react";
 
 export default function ProjecList() {
   const [page, setPage] = useState(0);
@@ -60,15 +61,28 @@ export default function ProjecList() {
     return () => observer.disconnect();
   }, [isFetching, hasMore]);
 
+  const propertyFormData = new FormData();
+
+
+
+  const propertyDetailsBlob = new Blob(
+    [JSON.stringify({ projectName: `New Project ${Date.now()}` })],
+    {
+      type: "application/json",
+    }
+  );
+
+  propertyFormData.append("propertyDetails", propertyDetailsBlob);
+  
+
+
   return (
     <div className="p-4 space-y-4">
       {/* Header */}
       <div className="flex justify-between items-center sticky top-0 bg-white p-2 border-b">
         <h1 className="text-xl font-bold">Projects</h1>
         <button
-          onClick={() =>
-            createProject({ projectName: `New Project ${Date.now()}` })
-          }
+          onClick={() => createProject(propertyFormData)}
           className="bg-blue-600 text-white px-4 py-2 rounded-lg"
         >
           Add Project
